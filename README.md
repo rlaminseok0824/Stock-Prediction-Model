@@ -1,85 +1,45 @@
-# [AAAI 2025] Battling the Non-stationarity in Time Series Forecasting via Test-time Adaptation
+# Stock Prediction Model
 
-## Abstract
-Deep Neural Networks have spearheaded remarkable advancements in time series forecasting (TSF), one of the major tasks in time series modeling. Nonetheless, the non-stationarity of time series undermines the reliability of pre-trained source time series forecasters in mission-critical deployment settings. 
-In this study, we introduce a pioneering test-time adaptation framework tailored for TSF (TSF-TTA). TAFAS, the proposed approach to TSF-TTA, flexibly adapts source forecasters to continuously shifting test distributions while preserving the core semantic information learned during pre-training. The novel utilization of partially-observed ground truth and gated calibration module enables proactive, robust, and model-agnostic adaptation of source forecasters. 
-Experiments on diverse benchmark datasets and cutting-edge architectures demonstrate the efficacy and generality of TAFAS, especially in long-term forecasting scenarios that suffer from significant distribution shifts.
+## 프로젝트 개요
 
-![Overview](./overview.png)
+본 프로젝트는 **졸업작품**으로 개발된 주식 예측 모델입니다. TAFAS(Test-time Adaptation Framework for Time Series), Time-LLM, SAN(Slice-based Adaptive Normalization) 등의 최신 시계열 예측 기법을 활용하여 주식 가격을 예측하는 딥러닝 모델을 구현했습니다.
 
-The figure above illustrates the overview pipeline of our proposed TAFAS framework.
+## 주요 특징
 
-## Prepare Datasets
-The datasets can be downloaded from the [Time-Series-Library](https://github.com/thuml/Time-Series-Library).
+- **비정상성 대응**: 시계열 데이터의 비정상성(non-stationarity) 문제를 해결하기 위한 테스트타임 적응 프레임워크 적용
+- **다중 모델 앙상블**: TAFAS, Time-LLM, SAN 모델을 결합한 앙상블 방식
+- **장기 예측**: 장기간 주식 가격 변동 예측에 최적화
+- **실시간 적응**: 예측 시점의 시장 요점을 제공하여 실시간 적응에 사용
 
-### Datasets
-- ETTh1
-- ETTm1
-- ETTh2
-- ETTm2
-- exchange_rate
-- weather
 
-Place the downloaded datasets in `data/{dataset}/{dataset}.csv`.
+## 사용법
 
-**Example:** For ETTh1, place it in `data/ETTh1/ETTh1.csv`.
-
-## Model Checkpoints
-Model checkpoints can be downloaded from [Google Drive](https://drive.google.com/drive/folders/16UdpRYf3BLRfem2LXLspN78dW4MOJkbn?usp=sharing). 
-
-You need to place the checkpoints in the project folder as stored in the Google Drive.
-
-**Example:** For model `FreTS` and dataset `ETTh1`, place `checkpoint_best.pth` in `checkpoints/FreTS/ETTh1_720/`.
-
-Due to Google Drive storage limitations, we only provide checkpoints for `pred_len = 720` for the following models and datasets:
-
-### Models
-- PatchTST
-- DLinear
-- OLS
-- FreTS
-
-### Datasets
-- ETTh1
-- ETTm1
-- ETTh2
-- ETTm2
-- exchange_rate
-- weather
-
-## Example Execution Code
-The script files are located in the `scripts/` directory. Run the following script to execute the model:
-
+### 모델 실행
 ```bash
 bash scripts/{model}/{dataset}_{pred_len}/run.sh
 ```
 
-**Example:** For model `FreTS` and dataset `ETTh1`, run:
-
+예시:
 ```bash
 bash scripts/FreTS/ETTh1_720/run.sh
 ```
 
-For settings where checkpoints are not provided, you can train the model by changing `TRAIN.ENABLE` from `False` to `True` in `run.sh`.
+### 모델 훈련
+체크포인트가 없는 경우, `run.sh` 파일에서 `TRAIN.ENABLE`을 `True`로 변경하여 훈련 가능합니다.
 
-## Models and Layers Packages
-The implementation references the [Time-Series-Library](https://github.com/thuml/Time-Series-Library).
+## 라이센스 및 인용
 
-## Citations
-If you find our work useful, please cite our paper:
+## 라이센스
+본 프로젝트는 다음 오픈소스 프로젝트들을 활용했습니다:
 
-```bibtex
-@article{kim2025battling,
-    title={Battling the Non-stationarity in Time Series Forecasting via Test-time Adaptation},
-    author={Kim, HyunGi and Kim, Siwon and Mok, Jisoo and Yoon, Sungroh},
-    journal={arXiv preprint arXiv:2501.04970},
-    year={2025}
-}
-```
+- **TAFAS**: MIT License  
+  - 출처: [kimanki/TAFAS](https://github.com/kimanki/TAFAS)
+  - 논문: Kim, HyunGi, et al. "Battling the Non-stationarity in Time Series Forecasting via Test-time Adaptation." AAAI 2025
 
-## License
-This project is licensed under the MIT License. For commercial use, permission is required.
+- **SAN**: Apache License 2.0  
+  - 출처: [icantnamemyself/SAN](https://github.com/icantnamemyself/SAN)
+  - 논문: "Adaptive Normalization for Non-stationary Time Series Forecasting: A Temporal Slice Perspective" (NeurIPS 2023)
 
-## Acknowledgements
-Please provide proper attribution if you use our codebase.  
-If you use our work, please cite our paper as mentioned in the Citations section.
+- **Time-LLM**: Apache License 2.0  
+  - 출처: [KimMeen/Time-LLM](https://github.com/KimMeen/Time-LLM)
+  - 논문: "Time-LLM: Time Series Forecasting by Reprogramming Large Language Models"
